@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="app.name">Blueprint Docs</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <header id="toolbar">
+    <div class="toolbar-group">
+      <button class="tb-btn" id="btn-new" data-i18n-title="toolbar.new" data-i18n="toolbar.new">📄 Nuevo</button>
+      <button class="tb-btn" id="btn-open" data-i18n-title="toolbar.open" data-i18n="toolbar.open">📂 Abrir</button>
+      <button class="tb-btn" id="btn-save" data-i18n-title="toolbar.save" data-i18n="toolbar.save">💾 Guardar</button>
+      <button class="tb-btn" id="btn-saveas" data-i18n-title="toolbar.saveAs" data-i18n="toolbar.saveAs">💾 Guardar como...</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button class="tb-btn" id="btn-export" data-i18n-title="toolbar.export" data-i18n="toolbar.export">📚 Exportar Docs</button>
+      <button class="tb-btn" id="btn-export-html" data-i18n-title="toolbar.exportHtml" data-i18n="toolbar.exportHtml">🌐 Exportar HTML</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button class="tb-btn" id="btn-design-guide" data-i18n-title="toolbar.designGuide" data-i18n="toolbar.designGuide">🎨 Guía de Diseño</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group" id="filter-group">
+      <button class="tb-btn filter-btn active" id="btn-filter-all" title="Vista completa">👁 Todo</button>
+      <button class="tb-btn filter-btn" id="btn-filter-data-flow" title="Solo flujo de datos">⚙ Datos</button>
+      <button class="tb-btn filter-btn" id="btn-filter-interfaces" title="Solo interfaces">🖥 Interfaces</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <button class="tb-btn" id="btn-zoom-out" data-i18n-title="toolbar.zoomOut" data-i18n="toolbar.zoomOut">🔍−</button>
+      <span id="zoom-level" class="tb-label">100%</span>
+      <button class="tb-btn" id="btn-zoom-in" data-i18n-title="toolbar.zoomIn" data-i18n="toolbar.zoomIn">🔍+</button>
+      <button class="tb-btn" id="btn-zoom-fit" data-i18n-title="toolbar.zoomFit" data-i18n="toolbar.zoomFit">⊡</button>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <span class="tb-label" data-i18n="toolbar.template">Plantilla:</span>
+      <select id="template-select" class="tb-select">
+        <option value="blank" data-i18n="template.blank">Vacía</option>
+        <option value="simple-process" data-i18n="template.simpleProcess">Proceso Simple</option>
+        <option value="decision-tree" data-i18n="template.decisionTree">Árbol de Decisión</option>
+        <option value="pipeline" data-i18n="template.pipeline">Pipeline de IA</option>
+        <option value="scientific-calculator" data-i18n="template.calculator">Calculadora Científica</option>
+      </select>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
+      <select id="lang-select" class="tb-select">
+        <option value="es">🇪🇸 Español</option>
+        <option value="en">🇬🇧 English</option>
+      </select>
+    </div>
+    <div class="toolbar-spacer"></div>
+    <span id="project-name" class="tb-label">Proyecto sin nombre</span>
+  </header>
+
+  <div id="main">
+    <aside id="sidebar-left">
+      <div class="panel-header" data-i18n="palette.header">Paleta de Nodos</div>
+      <div class="palette-list" id="palette">
+        <div class="palette-item" data-type="Start" draggable="true">
+          <span class="palette-icon" style="background:#4CAF50">▶</span>
+          <span class="palette-label" data-i18n="palette.node.Start">Inicio</span>
+        </div>
+        <div class="palette-item" data-type="Process" draggable="true">
+          <span class="palette-icon" style="background:#2196F3">⚙</span>
+          <span class="palette-label" data-i18n="palette.node.Process">Proceso</span>
+        </div>
+        <div class="palette-item" data-type="Decision" draggable="true">
+          <span class="palette-icon" style="background:#FF9800">◇</span>
+          <span class="palette-label" data-i18n="palette.node.Decision">Decisión</span>
+        </div>
+        <div class="palette-item" data-type="Document" draggable="true">
+          <span class="palette-icon" style="background:#FFC107">📄</span>
+          <span class="palette-label" data-i18n="palette.node.Document">Documento</span>
+        </div>
+        <div class="palette-item" data-type="SubGraph" draggable="true">
+          <span class="palette-icon" style="background:#9C27B0">⊞</span>
+          <span class="palette-label" data-i18n="palette.node.SubGraph">SubGrafo</span>
+        </div>
+        <div class="palette-item" data-type="Screen" draggable="true">
+          <span class="palette-icon" style="background:#00BCD4">🖥</span>
+          <span class="palette-label" data-i18n="palette.node.Screen">Pantalla</span>
+        </div>
+        <div class="palette-item" data-type="End" draggable="true">
+          <span class="palette-icon" style="background:#f44336">■</span>
+          <span class="palette-label" data-i18n="palette.node.End">Fin</span>
+        </div>
+      </div>
+      <div class="panel-header" style="margin-top:12px" data-i18n="palette.actions">Acciones</div>
+      <div class="palette-list">
+        <button class="palette-action" id="action-add-start" data-i18n="palette.addStart">➕ Añadir Inicio</button>
+        <button class="palette-action" id="action-add-process" data-i18n="palette.addProcess">➕ Añadir Proceso</button>
+        <button class="palette-action" id="action-add-decision" data-i18n="palette.addDecision">➕ Añadir Decisión</button>
+        <button class="palette-action" id="action-add-document" data-i18n="palette.addDocument">➕ Añadir Documento</button>
+        <button class="palette-action" id="action-add-subgraph" data-i18n="palette.addSubGraph">➕ Añadir SubGrafo</button>
+        <button class="palette-action" id="action-add-screen" data-i18n="palette.addScreen">➕ Añadir Pantalla</button>
+        <button class="palette-action" id="action-add-end" data-i18n="palette.addEnd">➕ Añadir Fin</button>
+        <div class="palette-sep"></div>
+        <button class="palette-action danger" id="action-delete-selected" data-i18n="palette.deleteSelected">🗑 Eliminar seleccionado</button>
+      </div>
+    </aside>
+
+    <section id="canvas-area">
+      <div id="canvas-container">
+        <svg id="canvas-svg" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#2a2a2a" stroke-width="0.5"/>
+            </pattern>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#888"/>
+            </marker>
+            <marker id="arrowhead-selected" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#64B5F6"/>
+            </marker>
+            <marker id="arrowhead-cyan" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#00BCD4"/>
+            </marker>
+            <marker id="arrowhead-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#9C27B0"/>
+            </marker>
+            <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#f44336"/>
+            </marker>
+          </defs>
+          <rect id="canvas-bg" width="100%" height="100%" fill="url(#grid)"/>
+          <g id="viewport-group">
+            <g id="containers-layer"></g>
+            <g id="edges-layer"></g>
+            <g id="temp-edge-layer"></g>
+            <g id="nodes-layer"></g>
+          </g>
+        </svg>
+        <div id="canvas-empty-hint" class="hidden" data-i18n="canvas.emptyHint">
+          Arrastra nodos desde la paleta o haz doble clic en el lienzo
+        </div>
+      </div>
+    </section>
+
+    <aside id="sidebar-right">
+      <div class="panel-header" data-i18n="properties.header">Propiedades</div>
+      <div id="properties-panel">
+        <div id="prop-placeholder" class="prop-placeholder" data-i18n="properties.placeholder">
+          Selecciona un nodo o conexión para ver sus propiedades
+        </div>
+        <div id="prop-content" class="hidden">
+          <div class="prop-section">
+            <label class="prop-label" data-i18n="properties.name">Nombre</label>
+            <input type="text" id="prop-name" class="prop-input" />
+          </div>
+          <div class="prop-section">
+            <label class="prop-label" data-i18n="properties.type">Tipo</label>
+            <input type="text" id="prop-type" class="prop-input" readonly />
+          </div>
+          <div class="prop-section">
+            <label class="prop-label" data-i18n="properties.id">ID</label>
+            <input type="text" id="prop-id" class="prop-input prop-mono" readonly />
+          </div>
+          <div class="prop-section" id="prop-edge-section" style="display:none">
+            <label class="prop-label" data-i18n="properties.edgeFrom">Desde → Hasta</label>
+            <input type="text" id="prop-edge-from" class="prop-input" readonly />
+            <input type="text" id="prop-edge-to" class="prop-input" readonly />
+          </div>
+          <div class="prop-section">
+            <label class="prop-label" data-i18n="properties.description">Descripción corta</label>
+            <textarea id="prop-description" class="prop-textarea" rows="2"></textarea>
+          </div>
+          <div id="prop-impl-section" class="hidden">
+            <div class="prop-section-header" data-i18n="properties.implHeader">Implementación</div>
+            <div class="prop-section">
+              <label class="prop-label" data-i18n="properties.order">Orden</label>
+              <input type="number" id="prop-order" class="prop-input" min="0" />
+            </div>
+            <div class="prop-section">
+              <label class="prop-label" data-i18n="properties.status">Estado</label>
+              <select id="prop-status" class="prop-select">
+                <option value="pending" data-i18n="status.pending">Pendiente</option>
+                <option value="in-progress" data-i18n="status.inProgress">En progreso</option>
+                <option value="done" data-i18n="status.done">Completado</option>
+              </select>
+            </div>
+            <div id="prop-diary-section" class="hidden">
+              <div class="prop-diary-list" id="prop-diary-list"></div>
+              <div class="prop-diary-add">
+                <input type="text" id="prop-diary-input" class="prop-input" data-i18n-placeholder="properties.diaryPlaceholder" placeholder="Añadir entrada al diario..." />
+                <button class="tb-btn-sm" id="prop-diary-add-btn" data-i18n="properties.diaryAdd">Añadir</button>
+              </div>
+            </div>
+          </div>
+          <div id="prop-screen-children" class="hidden">
+            <div class="prop-section-header" data-i18n="screen.children">Tareas asociadas</div>
+            <div id="prop-children-list" class="prop-children-list"></div>
+          </div>
+          <div id="prop-interface-section" class="hidden">
+            <div class="prop-section-header" data-i18n="properties.section.interfaces">Interfaces</div>
+            <div class="prop-section">
+              <label class="prop-label" data-i18n="properties.figmaUrl">URL de Figma</label>
+              <div class="prop-url-row">
+                <input type="url" id="prop-figma-url" class="prop-input" placeholder="https://www.figma.com/file/..." />
+                <button class="tb-btn-sm prop-url-btn" id="btn-open-figma" data-i18n="properties.openLink">Abrir</button>
+              </div>
+            </div>
+            <div class="prop-section">
+              <label class="prop-label" data-i18n="properties.htmlUrl">URL de HTML Prototipo</label>
+              <div class="prop-url-row">
+                <input type="url" id="prop-html-url" class="prop-input" placeholder="https://... o ./prototypes/..." />
+                <button class="tb-btn-sm prop-url-btn" id="btn-open-html" data-i18n="properties.openLink">Abrir</button>
+              </div>
+            </div>
+            <div id="prop-interface-hint" class="prop-interface-hint hidden" data-i18n="properties.noInterface">Sin diseño asignado. Seguir la Guía de Diseño del proyecto.</div>
+          </div>
+        </div>
+
+        <div class="panel-header" style="margin-top:12px" data-i18n="doc.header">Documentación</div>
+        <div id="doc-section" class="hidden">
+          <div class="doc-toolbar">
+            <button class="tb-btn-sm" id="doc-edit-btn" data-i18n-title="doc.edit" data-i18n="doc.edit">✏️ Editar</button>
+            <button class="tb-btn-sm" id="doc-preview-btn" data-i18n-title="doc.preview" data-i18n="doc.preview">👁 Vista</button>
+            <button class="tb-btn-sm" id="doc-template-btn" data-i18n-title="doc.template" data-i18n="doc.template">📋 Plantilla</button>
+          </div>
+          <textarea id="doc-editor" class="doc-editor" data-i18n-placeholder="doc.editorPlaceholder" placeholder="Escribe la documentación en Markdown..."></textarea>
+          <div id="doc-preview" class="doc-preview hidden markdown-body"></div>
+        </div>
+        <div id="doc-placeholder" class="prop-placeholder" data-i18n="doc.placeholder">
+          Selecciona un elemento para documentar
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer id="statusbar">
+    <span id="status-text" data-i18n="status.ready">Listo</span>
+    <span id="status-coords"></span>
+    <span id="status-counts"></span>
+  </footer>
+</div>
+
+<div id="context-menu" class="hidden">
+  <div class="ctx-item" data-action="edit" data-i18n="ctx.edit">✏️ Editar documentación</div>
+  <div class="ctx-item" data-action="duplicate" data-i18n="ctx.duplicate">📋 Duplicar</div>
+  <div class="ctx-item" data-action="add-to-screen" data-i18n="ctx.addToScreen">🔗 Vincular a Pantalla...</div>
+  <div class="ctx-item" data-action="disconnect" data-i18n="ctx.disconnect">🔗 Desconectar</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item danger" data-action="delete" data-i18n="ctx.delete">🗑 Eliminar</div>
+</div>
+
+<script src="js/i18n/es.js"></script>
+<script src="js/i18n/i18n.js"></script>
+<script src="js/templates.js"></script>
+<script src="js/graph.js"></script>
+<script src="js/documentation.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

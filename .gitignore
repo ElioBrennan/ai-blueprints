@@ -1,0 +1,17 @@
+# Windows
+Thumbs.db
+Desktop.ini
+*.log
+
+# Node / IDEs
+node_modules/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+
+# Project specific
+templates/
