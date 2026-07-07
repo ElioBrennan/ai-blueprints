@@ -311,6 +311,21 @@ md += `\`\`\`\n`;
       md += `| ${fromName} | ${toName} | ${desc} |\n`;
     }
 
+    md += `\n## ${t('llm.systemDiagram')}\n\n`;
+    md += '```mermaid\n';
+    md += 'flowchart LR\n';
+    for (const node of sortedNodes) {
+      const safeId = 'N' + node.id.replace(/[^a-zA-Z0-9]/g, '_');
+      md += `  ${safeId}["${node.name}"]\n`;
+    }
+    for (const edge of edges) {
+      const fromSafe = 'N' + edge.fromNode.replace(/[^a-zA-Z0-9]/g, '_');
+      const toSafe = 'N' + edge.toNode.replace(/[^a-zA-Z0-9]/g, '_');
+      const edgeLabel = edge.label || edge.type;
+      md += `  ${fromSafe} -->|${edgeLabel}| ${toSafe}\n`;
+    }
+    md += '```\n\n';
+
     md += `\n## ${t('llm.designGuide')}\n\n`;
     md += `[${t('export.designGuide')}](docs/design-guide.md)\n`;
 
