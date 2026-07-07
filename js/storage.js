@@ -257,7 +257,7 @@ md += `\`\`\`\n`;
   }
 
   _generateLLMContext(data) {
-    const sortedNodes = [...(data.nodes || [])].sort((a, b) => (a.implementationOrder || 0) - (b.implementationOrder || 0));
+    const sortedNodes = this._topologicalSort(data.nodes || [], data.edges || []);
     const edges = data.edges || [];
 
     let md = `# ${t('llm.title', data.name || t('app.untitled'))}\n\n`;
