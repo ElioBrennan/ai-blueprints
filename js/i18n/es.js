@@ -17,6 +17,7 @@ window._translations.es = {
   'toolbar.zoomFit': '\u2291',
   'toolbar.template': 'Plantilla:',
   'toolbar.designGuide': '\uD83C\uDFA8 Gu\u00EDa de Dise\u00F1o',
+  'toolbar.guide': '\u2753 Gu\u00EDa de uso',
 
   /* ─── LLM Target Select ─── */
   'llmTarget.label': 'Exportar para:',
@@ -329,5 +330,84 @@ window._translations.es = {
     '## Layout\n' +
     'Describir la estructura de las pantallas.\n\n' +
     '## Accesibilidad\n' +
-    'Notas sobre accesibilidad.\n'
+    'Notas sobre accesibilidad.\n',
+
+  /* ─── Guide ─── */
+  'guide.title': 'Gu\u00EDa de uso',
+  'guide.intro': 'Blueprint Docs es un editor visual de diagramas de flujo 100% offline. Crea grafos de nodos y conexiones, documenta cada elemento con Markdown y exporta la documentaci\u00F3n a varios formatos.',
+  'guide.section.nodes': 'Crear y gestionar nodos',
+  'guide.nodes.text':
+    'Arrastra nodos desde la paleta izquierda al lienzo, o haz doble clic en el lienzo para a\u00F1adir un proceso.\n\n' +
+    'Tambi\u00E9n puedes usar los botones de acci\u00F3n r\u00E1pida debajo de la paleta. Los nodos se conectan arrastrando desde un pin de salida (c\u00EDrculo) a un pin de entrada de otro nodo.\n\n' +
+    'Tipos de nodo disponibles: Inicio, Proceso, Decisi\u00F3n, Documento, SubGrafo, Pantalla y Fin.',
+  'guide.section.connections': 'Conectar nodos',
+  'guide.connections.text':
+    'Para crear una conexi\u00F3n, haz clic y arrastra desde un pin de salida (lado derecho del nodo) hasta un pin de entrada (lado izquierdo) de otro nodo.\n\n' +
+    'El tipo de conexi\u00F3n se asigna autom\u00E1ticamente seg\u00FAn los tipos de nodo:\n' +
+    '- Pantalla \u2192 Pantalla: Navegaci\u00F3n (l\u00EDnea discontinua cian)\n' +
+    '- Pantalla \u2192 Proceso: Acci\u00F3n de usuario (l\u00EDnea punteada roja)\n' +
+    '- Proceso \u2192 Pantalla: Dato \u2192 UI (l\u00EDnea punteada p\u00FArpura)\n' +
+    '- Proceso \u2192 Proceso: Flujo de datos (l\u00EDnea s\u00F3lida gris)',
+  'guide.section.screens': 'Jerarqu\u00EDa de pantallas',
+  'guide.screens.text':
+    'Los nodos tipo Pantalla (Screen) pueden contener subnodos (procesos, decisiones, documentos). Arrastra un nodo encima de una pantalla para asignarlo como tarea hija, o usa el men\u00FA contextual "Vincular a Pantalla".\n\n' +
+    'Las tareas hijas se muestran dentro del contenedor de la pantalla y se mueven con ella.',
+  'guide.section.documentation': 'Documentar elementos',
+  'guide.documentation.text':
+    'Selecciona un nodo o conexi\u00F3n para ver su panel de propiedades a la derecha. All\u00ED puedes:\n' +
+    '- Editar el nombre y la descripci\u00F3n corta\n' +
+    '- Escribir documentaci\u00F3n en Markdown con vista previa en vivo\n' +
+    '- Usar el bot\u00F3n "Plantilla" para insertar documentaci\u00F3n predefinida\n' +
+    '- Asignar orden de implementaci\u00F3n y estado (Pendiente/En progreso/Completado)\n' +
+    '- A\u00F1adir entradas al diario de implementaci\u00F3n\n' +
+    '- Para pantallas: a\u00F1adir URLs de Figma y prototipo HTML',
+  'guide.section.saving': 'Guardar proyectos',
+  'guide.saving.text':
+    'Usa los botones "Guardar" o "Guardar como..." de la barra de herramientas.\n\n' +
+    '**Condiciones**:\n' +
+    '- Si tu navegador soporta la File System Access API (Chromium/Edge): se guarda una carpeta con project.json + docs/ individuales\n' +
+    '- Si la API no est\u00E1 disponible: se descarga un archivo .json como fallback\n' +
+    '- Para abrir un proyecto guardado, usa "Abrir" y selecciona la carpeta que contiene project.json\n' +
+    '- Los proyectos JSON descargados se cargan manualmente desde el sistema de archivos',
+  'guide.section.exporting': 'Exportar documentaci\u00F3n',
+  'guide.exporting.text':
+    'Hay dos formas de exportar:\n\n' +
+    '**Exportar Docs (Markdown)**:\n' +
+    'Genera una carpeta docs/ con:\n' +
+    '- Un index.md con tabla de nodos y conexiones\n' +
+    '- Un archivo .md por cada nodo con su documentaci\u00F3n\n' +
+    '- design-guide.md con la gu\u00EDa de dise\u00F1o\n' +
+    '- Un archivo de contexto LLM (CLAUDE.md, AGENT.md, etc.)\n\n' +
+    '**Exportar HTML**:\n' +
+    'Genera un sitio est\u00E1tico completo con index.html de navegaci\u00F3n + docs/ individuales.\n\n' +
+    '**Selector de destino LLM**:\n' +
+    'Elige el formato del archivo de contexto seg\u00FAn tu asistente IA preferido.',
+  'guide.section.templates': 'Plantillas',
+  'guide.templates.text':
+    'Usa el selector de plantillas en la barra de herramientas para cargar grafos predefinidos:\n' +
+    '- **Proceso Simple**: flujo lineal b\u00E1sico\n' +
+    '- **\u00C1rbol de Decisi\u00F3n**: estructura de ramificaci\u00F3n\n' +
+    '- **Pipeline de IA**: flujo de datos con m\u00FAltiples etapas\n' +
+    '- **Calculadora Cient\u00EDfica**: ejemplo completo con jerarqu\u00EDa de pantallas\n\n' +
+    'Al aplicar una plantilla se pierden los cambios actuales (se muestra confirmaci\u00F3n).',
+  'guide.section.filters': 'Filtros de vista',
+  'guide.filters.text':
+    'Los filtros permiten enfocar la vista en aspectos espec\u00EDficos del grafo:\n\n' +
+    '- **Todo**: muestra todos los nodos y conexiones\n' +
+    '- **Flujo de Datos**: oculta las pantallas y conexiones de navegaci\u00F3n\n' +
+    '- **Interfaces**: muestra solo pantallas, sus tareas hijas y conexiones de interfaz\n\n' +
+    'Los filtros no modifican los datos, solo la visualizaci\u00F3n.',
+  'guide.section.shortcuts': 'Atajos de teclado',
+  'guide.shortcuts.text':
+    '- **Supr / Retroceso**: elimina el nodo o conexi\u00F3n seleccionada\n' +
+    '- **Escape**: deselecciona todo y cierra el men\u00FA contextual\n' +
+    '- **Doble clic en lienzo**: a\u00F1ade un proceso en esa posici\u00F3n\n' +
+    '- **Rueda del rat\u00F3n**: zoom in/out\n' +
+    '- **Arrastrar en lienzo**: panoramizar (pan)\n' +
+    '- **Arrastrar desde pin de salida**: crear conexi\u00F3n',
+  'guide.section.offline': 'Sin conexi\u00F3n (offline)',
+  'guide.offline.text':
+    'Blueprint Docs funciona 100% en el navegador, sin servidor ni conexi\u00F3n a Internet. Todos los datos se almacenan localmente.\n\n' +
+    'Necesitas un servidor HTTP local (como el serve.ps1 incluido) \u00FAnicamente porque los m\u00F3dulos ES usan import/fetch. Una vez cargado, la aplicaci\u00F3n es completamente aut\u00F3noma.',
+  'guide.close': 'Cerrar'
 };

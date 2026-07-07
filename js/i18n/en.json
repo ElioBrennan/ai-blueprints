@@ -13,6 +13,7 @@
   "toolbar.zoomFit": "\u2291",
   "toolbar.template": "Template:",
   "toolbar.designGuide": "\uD83C\uDFA8 Design Guide",
+  "toolbar.guide": "\u2753 Usage Guide",
 
   "llmTarget.label": "Export for:",
   "llmTarget.generic": "Generic (llm-context.md)",
@@ -208,5 +209,29 @@
 
   "designGuide.title": "Project Design Guide",
   "designGuide.default": "# Design Guide\n\n## Colors\n- **Primary**: \n- **Secondary**: \n- **Background**: \n- **Text**: \n\n## Typography\n- **Main font**: \n- **Sizes**: \n\n## Components\nDescribe the UI components of the system.\n\n## Layout\nDescribe the screen layout structure.\n\n## Accessibility\nAccessibility notes.\n",
-  "ctx.duplicateSuffix": "(copy)"
+  "ctx.duplicateSuffix": "(copy)",
+
+  "guide.title": "Usage Guide",
+  "guide.intro": "Blueprint Docs is a 100% offline visual flowchart editor. Create node-and-edge graphs, document each element with Markdown, and export documentation to multiple formats.",
+  "guide.section.nodes": "Creating and managing nodes",
+  "guide.section.connections": "Connecting nodes",
+  "guide.section.screens": "Screen hierarchy",
+  "guide.section.documentation": "Documenting elements",
+  "guide.section.saving": "Saving projects",
+  "guide.section.exporting": "Exporting documentation",
+  "guide.section.templates": "Templates",
+  "guide.section.filters": "View filters",
+  "guide.section.shortcuts": "Keyboard shortcuts",
+  "guide.section.offline": "Offline usage",
+  "guide.nodes.text": "Drag nodes from the left palette onto the canvas, or double-click the canvas to add a process.\n\nYou can also use the quick-action buttons below the palette. Nodes connect by dragging from an output pin (circle) to an input pin on another node.\n\nAvailable node types: Start, Process, Decision, Document, SubGraph, Screen and End.",
+  "guide.connections.text": "To create a connection, click and drag from an output pin (right side of node) to an input pin (left side) of another node.\n\nThe connection type is assigned automatically based on node types:\n- Screen \u2192 Screen: Navigation (cyan dashed line)\n- Screen \u2192 Process: User action (red dotted line)\n- Process \u2192 Screen: Data \u2192 UI (purple dotted line)\n- Process \u2192 Process: Data flow (solid gray line)",
+  "guide.screens.text": "Screen nodes can contain child nodes (processes, decisions, documents). Drag a node onto a Screen to assign it as a child task, or use the context menu \"Link to Screen\".\n\nChild tasks are displayed inside the Screen container and move with it.",
+  "guide.documentation.text": "Select a node or connection to see its properties panel on the right. There you can:\n- Edit the name and short description\n- Write Markdown documentation with live preview\n- Use the \"Template\" button to insert predefined docs\n- Set implementation order and status (Pending/In Progress/Done)\n- Add entries to the implementation diary\n- For Screens: add Figma and HTML prototype URLs",
+  "guide.saving.text": "Use the \"Save\" or \"Save As...\" buttons in the toolbar.\n\n**Conditions**:\n- If your browser supports the File System Access API (Chromium/Edge): saves a folder with project.json + individual docs/\n- If the API is not available: downloads a .json file as fallback\n- To open a saved project, use \"Open\" and select the folder containing project.json\n- Downloaded JSON projects are loaded manually from the file system",
+  "guide.exporting.text": "Two export modes are available:\n\n**Export Docs (Markdown)**:\nGenerates a docs/ folder with:\n- An index.md with node and connection tables\n- One .md file per node with its documentation\n- design-guide.md with the design guide\n- An LLM context file (CLAUDE.md, AGENT.md, etc.)\n\n**Export HTML**:\nGenerates a complete static site with a navigation index.html + individual docs/.\n\n**LLM target selector**:\nChoose the context file format for your preferred AI assistant.",
+  "guide.templates.text": "Use the template selector in the toolbar to load predefined graphs:\n- **Simple Process**: basic linear flow\n- **Decision Tree**: branching structure\n- **AI Pipeline**: multi-stage data flow\n- **Scientific Calculator**: full example with screen hierarchy\n\nApplying a template discards current changes (confirmation is shown).",
+  "guide.filters.text": "Filters let you focus on specific aspects of the graph:\n\n- **All**: shows all nodes and connections\n- **Data Flow**: hides screens and navigation connections\n- **Interfaces**: shows only screens, their child tasks, and interface connections\n\nFilters do not modify data, only the display.",
+  "guide.shortcuts.text": "- **Delete / Backspace**: remove the selected node or connection\n- **Escape**: deselect everything and close the context menu\n- **Double-click canvas**: add a process at that position\n- **Mouse wheel**: zoom in/out\n- **Drag on canvas**: pan\n- **Drag from output pin**: create a connection",
+  "guide.offline.text": "Blueprint Docs runs 100% in the browser, with no server or Internet connection required. All data is stored locally.\n\nYou only need a local HTTP server (such as the included serve.ps1) because ES modules use import/fetch. Once loaded, the application is fully self-contained.",
+  "guide.close": "Close"
 }

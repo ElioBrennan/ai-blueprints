@@ -111,6 +111,20 @@
       docPanel.showDesignGuide(content);
     });
 
+    document.getElementById('btn-guide').addEventListener('click', () => {
+      document.getElementById('guide-modal').classList.remove('hidden');
+    });
+
+    document.getElementById('guide-close').addEventListener('click', closeGuide);
+    document.getElementById('guide-close-btn').addEventListener('click', closeGuide);
+    document.getElementById('guide-modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeGuide();
+    });
+
+    function closeGuide() {
+      document.getElementById('guide-modal').classList.add('hidden');
+    }
+
     /* ─── Template Select ─── */
 
     document.getElementById('template-select').addEventListener('change', (e) => {
@@ -208,6 +222,7 @@
         graph.deselectAll();
         docPanel.clear();
         hideContextMenu();
+        document.getElementById('guide-modal').classList.add('hidden');
       }
     });
 

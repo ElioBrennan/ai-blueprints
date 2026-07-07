@@ -34,6 +34,7 @@
     <div class="toolbar-sep"></div>
     <div class="toolbar-group">
       <button class="tb-btn" id="btn-design-guide" data-i18n-title="toolbar.designGuide" data-i18n="toolbar.designGuide">🎨 Guía de Diseño</button>
+      <button class="tb-btn" id="btn-guide" data-i18n-title="guide.title" data-i18n="toolbar.guide">❓ Ayuda</button>
     </div>
     <div class="toolbar-sep"></div>
     <div class="toolbar-group" id="filter-group">
@@ -250,6 +251,103 @@
     <span id="status-coords"></span>
     <span id="status-counts"></span>
   </footer>
+</div>
+
+<div id="guide-modal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span data-i18n="guide.title">Guía de uso</span>
+      <button class="modal-close" id="guide-close">&times;</button>
+    </div>
+    <div class="modal-body" id="guide-body">
+      <div class="guide-section">
+        <div class="guide-para" data-i18n="guide.intro">Blueprint Docs es un editor visual de diagramas de flujo 100% offline...</div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">1</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.nodes">Crear y gestionar nodos</div>
+          <div class="guide-para" data-i18n="guide.nodes.text">Arrastra nodos desde la paleta...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">2</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.connections">Conectar nodos</div>
+          <div class="guide-para" data-i18n="guide.connections.text">Para crear una conexión...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">3</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.screens">Jerarquía de pantallas</div>
+          <div class="guide-para" data-i18n="guide.screens.text">Los nodos tipo Pantalla...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">4</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.documentation">Documentar elementos</div>
+          <div class="guide-para" data-i18n="guide.documentation.text">Selecciona un nodo o conexión...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">5</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.saving">Guardar proyectos</div>
+          <div class="guide-para" data-i18n="guide.saving.text">Usa los botones Guardar...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">6</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.exporting">Exportar documentación</div>
+          <div class="guide-para" data-i18n="guide.exporting.text">Hay dos formas de exportar...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">7</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.templates">Plantillas</div>
+          <div class="guide-para" data-i18n="guide.templates.text">Usa el selector de plantillas...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">8</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.filters">Filtros de vista</div>
+          <div class="guide-para" data-i18n="guide.filters.text">Los filtros permiten enfocar...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">9</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.shortcuts">Atajos de teclado</div>
+          <div class="guide-para" data-i18n="guide.shortcuts.text">Supr / Retroceso: elimina...</div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="guide-step">10</div>
+        <div class="guide-section-content">
+          <div class="guide-heading" data-i18n="guide.section.offline">Sin conexión (offline)</div>
+          <div class="guide-para" data-i18n="guide.offline.text">Blueprint Docs funciona 100% en el navegador...</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="tb-btn" id="guide-close-btn" data-i18n="guide.close">Cerrar</button>
+    </div>
+  </div>
 </div>
 
 <div id="context-menu" class="hidden">
