@@ -299,6 +299,16 @@ md += `\`\`\`\n`;
       md += `\n`;
     }
 
+    md += `\n## ${t('llm.nodeDocs')}\n\n`;
+    for (const node of sortedNodes) {
+      md += `### ${node.implementationOrder ? node.implementationOrder + '. ' : ''}${node.name}\n\n`;
+      if (node.doc && node.doc.trim()) {
+        md += node.doc + '\n\n';
+      } else {
+        md += `${t('export.noDoc')}\n\n`;
+      }
+    }
+
     md += `## ${t('llm.connections')}\n\n`;
     md += `| ${t('export.tableFrom')} | ${t('export.tableTo')} | ${t('export.tableDescription')} |\n`;
     md += `|---|---|---|\n`;
@@ -310,6 +320,21 @@ md += `\`\`\`\n`;
       const desc = (edge.description || '').substring(0, 60).replace(/\n/g, ' ');
       md += `| ${fromName} | ${toName} | ${desc} |\n`;
     }
+
+    md += `\n## ${t('llm.systemDiagram')}\n\n`;
+md += '```mermaid\n';
+md += 'flowchart LR\n';
+for (const node of sortedNodes) {
+  const safeId = 'N' + node.id.replace(/[^a-zA-Z0-9]/g, '_');
+  md += `  ${safeId}["${node.name}"]\n`;
+}
+for (const edge of edges) {
+  const fromSafe = 'N' + edge.fromNode.replace(/[^a-zA-Z0-9]/g, '_');
+  const toSafe = 'N' + edge.toNode.replace(/[^a-zA-Z0-9]/g, '_');
+  const edgeLabel = edge.label || edge.type;
+  md += `  ${fromSafe} -->|${edgeLabel}| ${toSafe}\n`;
+}
+md += '```\n\n';
 
     md += `\n## ${t('llm.designGuide')}\n\n`;
     md += `[${t('export.designGuide')}](docs/design-guide.md)\n`;
