@@ -277,6 +277,9 @@ window._translations.es = {
   'llm.connections': 'Conexiones entre Nodos',
   'llm.edgeLabel': 'Etiqueta',
   'llm.designGuide': 'Gu\u00EDa de Dise\u00F1o',
+  'llm.projectInfo': 'Información del Proyecto',
+  'llm.exportDate': 'Fecha de exportación',
+  'llm.lang': 'Idioma',
 
   /* ─── Edge Types ─── */
   'edgeType.data-flow': 'Flujo de Datos',
