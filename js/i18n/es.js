@@ -261,9 +261,18 @@ window._translations.es = {
   'llm.diary': 'Diario de Implementaci\u00F3n',
   'llm.noDiaryEntries': '(Sin entradas en el diario)',
   'llm.connections': 'Conexiones entre Nodos',
+  'llm.edgeLabel': 'Etiqueta',
   'llm.designGuide': 'Gu\u00EDa de Dise\u00F1o',
+
+  /* ─── Edge Types ─── */
+  'edgeType.data-flow': 'Flujo de Datos',
+  'edgeType.navigation': 'Navegaci\u00F3n',
+  'edgeType.data-ui': 'Dato \u2192 UI',
+  'edgeType.user-action': 'Acci\u00F3n Usuario',
   'llm.nodeDocs': 'Documentaci\u00F3n completa de nodos',
   'llm.systemDiagram': 'Diagrama del Sistema',
+  'llm.screenHierarchy': 'Jerarquía de Pantallas',
+  'llm.noScreensWithChildren': '(No hay pantallas con tareas asociadas)',
 
   /* ─── Filters ─── */
   'filter.all': 'Todo',
