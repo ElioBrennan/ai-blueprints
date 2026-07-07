@@ -299,22 +299,113 @@ md += `\`\`\`\n`;
       md += `\n`;
     }
 
+    md += `\n## ${t('llm.nodeDocs')}\n\n`;
+    for (const node of sortedNodes) {
+      md += `### ${node.implementationOrder ? node.implementationOrder + '. ' : ''}${node.name}\n\n`;
+      if (node.doc && node.doc.trim()) {
+        md += node.doc + '\n\n';
+      } else {
+        md += `${t('export.noDoc')}\n\n`;
+      }
+    }
+
+    md += `\n## ${t('llm.screenHierarchy')}\n\n`;
+    const screensWithChildren = sortedNodes.filter(n => n.type === 'Screen' && n.children && n.children.length > 0);
+    if (screensWithChildren.length > 0) {
+      for (const screen of screensWithChildren) {
+        md += `### ${screen.name}\n\n`;
+        for (const childId of screen.children) {
+          const child = data.nodes.find(n => n.id === childId);
+          if (child) {
+            const label = getTemplateLabel(child.type);
+            md += `- **${child.name}** (${label})\n`;
+          }
+        }
+        md += '\n';
+      }
+    } else {
+      md += `${t('llm.noScreensWithChildren')}\n\n`;
+    }
+
     md += `## ${t('llm.connections')}\n\n`;
-    md += `| ${t('export.tableFrom')} | ${t('export.tableTo')} | ${t('export.tableDescription')} |\n`;
-    md += `|---|---|---|\n`;
+    md += `| ${t('export.tableFrom')} | ${t('export.tableTo')} | ${t('export.tableType')} | ${t('llm.edgeLabel')} | ${t('export.tableDescription')} |\n`;
+    md += `|---|---|---|---|---|\n`;
     for (const edge of edges) {
       const fromNode = data.nodes.find(n => n.id === edge.fromNode);
       const toNode = data.nodes.find(n => n.id === edge.toNode);
       const fromName = fromNode ? fromNode.name : edge.fromNode;
       const toName = toNode ? toNode.name : edge.toNode;
+      const typeLabel = t(`edgeType.${edge.type}`) || edge.type;
+      const label = edge.label || '-';
       const desc = (edge.description || '').substring(0, 60).replace(/\n/g, ' ');
-      md += `| ${fromName} | ${toName} | ${desc} |\n`;
+      md += `| ${fromName} | ${toName} | ${typeLabel} | ${label} | ${desc} |\n`;
     }
+
+    md += `\n## ${t('llm.systemDiagram')}\n\n`;
+md += '```mermaid\n';
+md += 'flowchart LR\n';
+for (const node of sortedNodes) {
+  const safeId = 'N' + node.id.replace(/[^a-zA-Z0-9]/g, '_');
+  md += `  ${safeId}["${node.name}"]\n`;
+}
+for (const edge of edges) {
+  const fromSafe = 'N' + edge.fromNode.replace(/[^a-zA-Z0-9]/g, '_');
+  const toSafe = 'N' + edge.toNode.replace(/[^a-zA-Z0-9]/g, '_');
+  const edgeLabel = edge.label || edge.type;
+  md += `  ${fromSafe} -->|${edgeLabel}| ${toSafe}\n`;
+}
+md += '```\n\n';
 
     md += `\n## ${t('llm.designGuide')}\n\n`;
     md += `[${t('export.designGuide')}](docs/design-guide.md)\n`;
 
     return md;
+  }
+
+  _topologicalSort(nodes, edges) {
+    if (!nodes || nodes.length === 0) return nodes || [];
+    const inDegree = new Map();
+    const adj = new Map();
+    const nodeMap = new Map();
+
+    for (const node of nodes) {
+      inDegree.set(node.id, 0);
+      adj.set(node.id, []);
+      nodeMap.set(node.id, node);
+    }
+
+    for (const edge of edges) {
+      if (adj.has(edge.fromNode) && adj.has(edge.toNode)) {
+        adj.get(edge.fromNode).push(edge.toNode);
+        inDegree.set(edge.toNode, (inDegree.get(edge.toNode) || 0) + 1);
+      }
+    }
+
+    const queue = [];
+    for (const [id, degree] of inDegree) {
+      if (degree === 0) queue.push(id);
+    }
+
+    const result = [];
+    while (queue.length > 0) {
+      const id = queue.shift();
+      const node = nodeMap.get(id);
+      if (node) result.push(node);
+      const neighbors = adj.get(id) || [];
+      for (const neighbor of neighbors) {
+        const newDegree = (inDegree.get(neighbor) || 1) - 1;
+        inDegree.set(neighbor, newDegree);
+        if (newDegree === 0) queue.push(neighbor);
+      }
+    }
+
+    for (const node of nodes) {
+      if (!result.find(n => n.id === node.id)) {
+        result.push(node);
+      }
+    }
+
+    return result;
   }
 
   _generateStaticSite(data) {
