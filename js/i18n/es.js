@@ -262,6 +262,7 @@ window._translations.es = {
   'llm.noDiaryEntries': '(Sin entradas en el diario)',
   'llm.connections': 'Conexiones entre Nodos',
   'llm.designGuide': 'Gu\u00EDa de Dise\u00F1o',
+  'llm.nodeDocs': 'Documentaci\u00F3n completa de nodos',
 
   /* ─── Filters ─── */
   'filter.all': 'Todo',

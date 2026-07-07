@@ -299,6 +299,16 @@ md += `\`\`\`\n`;
       md += `\n`;
     }
 
+    md += `\n## ${t('llm.nodeDocs')}\n\n`;
+    for (const node of sortedNodes) {
+      md += `### ${node.implementationOrder ? node.implementationOrder + '. ' : ''}${node.name}\n\n`;
+      if (node.doc && node.doc.trim()) {
+        md += node.doc + '\n\n';
+      } else {
+        md += `${t('export.noDoc')}\n\n`;
+      }
+    }
+
     md += `## ${t('llm.connections')}\n\n`;
     md += `| ${t('export.tableFrom')} | ${t('export.tableTo')} | ${t('export.tableDescription')} |\n`;
     md += `|---|---|---|\n`;
