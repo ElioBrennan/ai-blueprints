@@ -310,15 +310,17 @@ md += `\`\`\`\n`;
     }
 
     md += `## ${t('llm.connections')}\n\n`;
-    md += `| ${t('export.tableFrom')} | ${t('export.tableTo')} | ${t('export.tableDescription')} |\n`;
-    md += `|---|---|---|\n`;
+    md += `| ${t('export.tableFrom')} | ${t('export.tableTo')} | ${t('export.tableType')} | ${t('llm.edgeLabel')} | ${t('export.tableDescription')} |\n`;
+    md += `|---|---|---|---|---|\n`;
     for (const edge of edges) {
       const fromNode = data.nodes.find(n => n.id === edge.fromNode);
       const toNode = data.nodes.find(n => n.id === edge.toNode);
       const fromName = fromNode ? fromNode.name : edge.fromNode;
       const toName = toNode ? toNode.name : edge.toNode;
+      const typeLabel = t(`edgeType.${edge.type}`) || edge.type;
+      const label = edge.label || '-';
       const desc = (edge.description || '').substring(0, 60).replace(/\n/g, ' ');
-      md += `| ${fromName} | ${toName} | ${desc} |\n`;
+      md += `| ${fromName} | ${toName} | ${typeLabel} | ${label} | ${desc} |\n`;
     }
 
     md += `\n## ${t('llm.systemDiagram')}\n\n`;
