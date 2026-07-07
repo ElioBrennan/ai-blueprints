@@ -44,6 +44,7 @@ class Graph {
     this.selectedEdge = null;
 
     this.designGuide = '';
+    this.llmTarget = 'generic';
 
     this.dragState = null;
     this.panState = null;
@@ -377,7 +378,8 @@ class Graph {
       nextNodeId: this.nextNodeId,
       nextEdgeId: this.nextEdgeId,
       viewX: this.viewX, viewY: this.viewY, viewScale: this.viewScale,
-      designGuide: this.designGuide
+      designGuide: this.designGuide,
+      llmTarget: this.llmTarget
     };
   }
 
@@ -420,6 +422,7 @@ class Graph {
     }
 
     this.designGuide = data.designGuide || '';
+    if (data.llmTarget) this.llmTarget = data.llmTarget;
 
     if (data.edges) {
       for (const e of data.edges) {

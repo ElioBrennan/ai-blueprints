@@ -53,6 +53,9 @@
       graph.clear();
       storage.dirHandle = null;
       storage.setProjectName(t('app.untitled'));
+      storage.llmTarget = 'generic';
+      graph.llmTarget = 'generic';
+      document.getElementById('llm-target-select').value = 'generic';
       docPanel.clear();
     });
 
@@ -61,6 +64,8 @@
       if (data) {
         graph.fromJSON(data);
         storage.setProjectName(data.name || t('app.untitled'));
+        storage.llmTarget = graph.llmTarget;
+        document.getElementById('llm-target-select').value = graph.llmTarget;
         docPanel.clear();
       }
     });
@@ -117,6 +122,8 @@
       }
       storage.applyTemplate(val, graph);
       e.target.value = 'blank';
+      document.getElementById('llm-target-select').value = graph.llmTarget;
+      storage.llmTarget = graph.llmTarget;
       setTimeout(() => graph.zoomToFit(), 50);
     });
 
@@ -280,6 +287,13 @@
       }
     });
 
+    /* ─── LLM Target Selector ─── */
+
+    document.getElementById('llm-target-select').addEventListener('change', (e) => {
+      graph.llmTarget = e.target.value;
+      storage.llmTarget = e.target.value;
+    });
+
     /* ─── Language Switcher ─── */
 
     document.getElementById('lang-select').addEventListener('change', (e) => {
@@ -303,6 +317,17 @@
         templateSelect.appendChild(opt);
       });
       templateSelect.value = currentVal;
+
+      const llmSelect = document.getElementById('llm-target-select');
+      const llmVal = llmSelect.value;
+      llmSelect.innerHTML = '';
+      for (const [key, target] of Object.entries(LLM_TARGETS)) {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = t(target.labelKey) || target.file;
+        llmSelect.appendChild(opt);
+      }
+      llmSelect.value = llmVal;
     });
 
     /* ─── Keyboard shortcuts hints ─── */

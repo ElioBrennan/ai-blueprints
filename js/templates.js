@@ -130,6 +130,14 @@ function getEdgeDocTemplate(fromName, toName) {
     .replace(/\{to\}/g, toName);
 }
 
+const LLM_TARGETS = {
+  generic: { file: 'llm-context.md', labelKey: 'llmTarget.generic' },
+  claude: { file: 'CLAUDE.md', labelKey: 'llmTarget.claude' },
+  gpt: { file: 'AGENT.md', labelKey: 'llmTarget.gpt' },
+  cursor: { file: '.cursorrules', labelKey: 'llmTarget.cursor' },
+  windsurf: { file: '.windsurfrules', labelKey: 'llmTarget.windsurf' }
+};
+
 const TEMPLATE_DOC_DEFAULTS = {
   Start:
     '# Start: {{name}}\n\n' +

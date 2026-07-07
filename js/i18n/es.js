@@ -18,6 +18,14 @@ window._translations.es = {
   'toolbar.template': 'Plantilla:',
   'toolbar.designGuide': '\uD83C\uDFA8 Gu\u00EDa de Dise\u00F1o',
 
+  /* ─── LLM Target Select ─── */
+  'llmTarget.label': 'Exportar para:',
+  'llmTarget.generic': 'Gen\u00E9rico (llm-context.md)',
+  'llmTarget.claude': 'Claude (CLAUDE.md)',
+  'llmTarget.gpt': 'GPT (AGENT.md)',
+  'llmTarget.cursor': 'Cursor (.cursorrules)',
+  'llmTarget.windsurf': 'Windsurf (.windsurfrules)',
+
   /* ─── Template Select ─── */
   'template.blank': 'Vac\u00EDa',
   'template.simpleProcess': 'Proceso Simple',

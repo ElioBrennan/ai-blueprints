@@ -2,6 +2,7 @@ class Storage {
   constructor() {
     this.dirHandle = null;
     this.projectName = t('app.untitled');
+    this.llmTarget = 'generic';
   }
 
   /* ─── File System Access API ─── */
@@ -79,8 +80,9 @@ class Storage {
       await indexWritable.write(indexContent);
       await indexWritable.close();
 
+      const llmTargetConfig = LLM_TARGETS[data.llmTarget || this.llmTarget || 'generic'] || LLM_TARGETS.generic;
       const llmContent = this._generateLLMContext(data);
-      const llmHandle = await dirHandle.getFileHandle('llm-context.md', { create: true });
+      const llmHandle = await dirHandle.getFileHandle(llmTargetConfig.file, { create: true });
       const llmWritable = await llmHandle.createWritable();
       await llmWritable.write(llmContent);
       await llmWritable.close();

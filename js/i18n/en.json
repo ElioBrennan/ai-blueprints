@@ -14,6 +14,13 @@
   "toolbar.template": "Template:",
   "toolbar.designGuide": "\uD83C\uDFA8 Design Guide",
 
+  "llmTarget.label": "Export for:",
+  "llmTarget.generic": "Generic (llm-context.md)",
+  "llmTarget.claude": "Claude (CLAUDE.md)",
+  "llmTarget.gpt": "GPT (AGENT.md)",
+  "llmTarget.cursor": "Cursor (.cursorrules)",
+  "llmTarget.windsurf": "Windsurf (.windsurfrules)",
+
   "template.blank": "Blank",
   "template.simpleProcess": "Simple Process",
   "template.decisionTree": "Decision Tree",

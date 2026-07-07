@@ -17,6 +17,17 @@
     </div>
     <div class="toolbar-sep"></div>
     <div class="toolbar-group">
+      <span class="tb-label" data-i18n="llmTarget.label">Exportar para:</span>
+      <select id="llm-target-select" class="tb-select">
+        <option value="generic" data-i18n="llmTarget.generic">Genérico (llm-context.md)</option>
+        <option value="claude" data-i18n="llmTarget.claude">Claude (CLAUDE.md)</option>
+        <option value="gpt" data-i18n="llmTarget.gpt">GPT (AGENT.md)</option>
+        <option value="cursor" data-i18n="llmTarget.cursor">Cursor (.cursorrules)</option>
+        <option value="windsurf" data-i18n="llmTarget.windsurf">Windsurf (.windsurfrules)</option>
+      </select>
+    </div>
+    <div class="toolbar-sep"></div>
+    <div class="toolbar-group">
       <button class="tb-btn" id="btn-export" data-i18n-title="toolbar.export" data-i18n="toolbar.export">📚 Exportar Docs</button>
       <button class="tb-btn" id="btn-export-html" data-i18n-title="toolbar.exportHtml" data-i18n="toolbar.exportHtml">🌐 Exportar HTML</button>
     </div>
