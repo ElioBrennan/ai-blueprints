@@ -181,6 +181,7 @@
   "edgeType.user-action": "User Action",
   "llm.nodeDocs": "Full Node Documentation",
   "llm.systemDiagram": "System Diagram",
+  "llm.jsonData": "Structured Data (JSON)",
   "llm.screenHierarchy": "Screen Hierarchy",
   "llm.noScreensWithChildren": "(No screens with associated tasks)",
 

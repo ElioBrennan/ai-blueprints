@@ -271,6 +271,7 @@ window._translations.es = {
   'edgeType.user-action': 'Acci\u00F3n Usuario',
   'llm.nodeDocs': 'Documentaci\u00F3n completa de nodos',
   'llm.systemDiagram': 'Diagrama del Sistema',
+  'llm.jsonData': 'Datos estructurados (JSON)',
   'llm.screenHierarchy': 'Jerarquía de Pantallas',
   'llm.noScreensWithChildren': '(No hay pantallas con tareas asociadas)',
 
