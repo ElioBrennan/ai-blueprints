@@ -289,6 +289,7 @@ window._translations.es = {
   'llm.nodeDocs': 'Documentaci\u00F3n completa de nodos',
   'llm.systemDiagram': 'Diagrama del Sistema',
   'llm.topologicalNote': 'Los nodos están ordenados topológicamente según sus dependencias (los nodos sin dependencias primero).',
+  'llm.jsonData': 'Datos estructurados (JSON)',
   'llm.screenHierarchy': 'Jerarquía de Pantallas',
   'llm.noScreensWithChildren': '(No hay pantallas con tareas asociadas)',
 

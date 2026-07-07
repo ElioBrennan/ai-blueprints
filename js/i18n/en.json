@@ -185,6 +185,7 @@
   "llm.nodeDocs": "Full Node Documentation",
   "llm.systemDiagram": "System Diagram",
   "llm.topologicalNote": "Nodes are ordered topologically by their dependencies (nodes without dependencies first).",
+  "llm.jsonData": "Structured Data (JSON)",
   "llm.screenHierarchy": "Screen Hierarchy",
   "llm.noScreensWithChildren": "(No screens with associated tasks)",
 

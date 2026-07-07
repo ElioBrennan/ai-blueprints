@@ -369,6 +369,36 @@ md += '```\n\n';
     md += `\n## ${t('llm.designGuide')}\n\n`;
     md += `[${t('export.designGuide')}](docs/design-guide.md)\n`;
 
+    md += `\n## ${t('llm.jsonData')}\n\n`;
+    md += '```json\n';
+    const jsonPayload = {
+      projectName: data.name || '',
+      exportDate: new Date().toISOString(),
+      nodes: sortedNodes.map(n => ({
+        id: n.id,
+        name: n.name,
+        type: n.type,
+        description: n.description || '',
+        status: n.implementationStatus || 'pending',
+        order: n.implementationOrder || 0,
+        parentScreen: n.parentScreen || null
+      })),
+      edges: edges.map(e => {
+        const fromNode = data.nodes.find(n => n.id === e.fromNode);
+        const toNode = data.nodes.find(n => n.id === e.toNode);
+        return {
+          id: e.id,
+          from: fromNode ? fromNode.name : e.fromNode,
+          to: toNode ? toNode.name : e.toNode,
+          type: e.type || 'data-flow',
+          label: e.label || '',
+          description: e.description || ''
+        };
+      })
+    };
+    md += JSON.stringify(jsonPayload, null, 2);
+    md += '\n```\n\n';
+
     return md;
   }
 
