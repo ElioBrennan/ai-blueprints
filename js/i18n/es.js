@@ -180,6 +180,9 @@ window._translations.es = {
   'properties.openLink': 'Abrir',
   'properties.noInterface': 'Sin dise\u00F1o asignado. Seguir la Gu\u00EDa de Dise\u00F1o del proyecto.',
   'properties.interfaceHint': 'A\u00F1ade una URL de Figma o un prototipo HTML',
+  'properties.section.dimensions': 'Dimensiones',
+  'properties.width': 'Ancho',
+  'properties.height': 'Alto',
 
   /* ─── Documentation Panel ─── */
   'doc.header': 'Documentaci\u00F3n',
@@ -313,6 +316,10 @@ window._translations.es = {
   'screen.removeChild': 'Desvincular tarea',
   'ctx.addToScreen': 'Vincular a Pantalla...',
   'ctx.addToScreenHint': 'Escribe el n\u00FAmero de la pantalla:',
+  'screen.addChild': '+ A\u00F1adir tarea',
+  'screen.addChildPrompt': 'Elige un nodo para vincular como tarea:',
+  'screen.addChildHint': 'Escribe el n\u00FAmero del nodo:',
+  'screen.noAvailableNodes': 'No hay nodos disponibles para vincular',
 
   'designGuide.title': 'Gu\u00EDa de Dise\u00F1o del Proyecto',
   'designGuide.default':

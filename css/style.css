@@ -185,6 +185,7 @@ body {
 }
 
 #canvas-svg.dragging-node { cursor: grabbing; }
+#canvas-svg.resizing-node { cursor: nwse-resize; }
 #canvas-svg.panning { cursor: grab; }
 #canvas-svg.placing-node { cursor: crosshair; }
 
@@ -209,6 +210,20 @@ body {
 .node-title { font-size: 11px; font-weight: 600; fill: white; pointer-events: none; }
 .node-subtitle { font-size: 9px; fill: rgba(255,255,255,0.6); pointer-events: none; }
 .node-icon { font-size: 16px; pointer-events: none; }
+
+.node-resize-handle {
+  opacity: 0;
+  pointer-events: none;
+  cursor: nwse-resize;
+  transition: opacity 0.15s;
+}
+.node-group.selected .node-resize-handle {
+  opacity: 0.6;
+  pointer-events: all;
+}
+.node-group.selected .node-resize-handle:hover {
+  opacity: 1;
+}
 
 .pin {
   cursor: crosshair;

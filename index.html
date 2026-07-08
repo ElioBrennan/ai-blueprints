@@ -205,9 +205,25 @@
               </div>
             </div>
           </div>
+          <div id="prop-dim-section" class="hidden">
+            <div class="prop-section-header" data-i18n="properties.section.dimensions">Dimensiones</div>
+            <div class="prop-section" style="display:flex;gap:8px">
+              <div style="flex:1">
+                <label class="prop-label" data-i18n="properties.width">Ancho</label>
+                <input type="number" id="prop-width" class="prop-input" min="80" />
+              </div>
+              <div style="flex:1">
+                <label class="prop-label" data-i18n="properties.height">Alto</label>
+                <input type="number" id="prop-height" class="prop-input" min="40" />
+              </div>
+            </div>
+          </div>
           <div id="prop-screen-children" class="hidden">
             <div class="prop-section-header" data-i18n="screen.children">Tareas asociadas</div>
             <div id="prop-children-list" class="prop-children-list"></div>
+            <div class="prop-section">
+              <button class="tb-btn-sm" id="prop-child-add-btn" data-i18n="screen.addChild">+ Añadir tarea</button>
+            </div>
           </div>
           <div id="prop-interface-section" class="hidden">
             <div class="prop-section-header" data-i18n="properties.section.interfaces">Interfaces</div>

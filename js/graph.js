@@ -49,6 +49,7 @@ class Graph {
     this.dragState = null;
     this.panState = null;
     this.connectingState = null;
+    this.resizeState = null;
 
     this.filterMode = FILTER_ALL;
 
@@ -475,32 +476,26 @@ class Graph {
     if (!screen || screen.type !== 'Screen') return;
     const children = screen.children || [];
     if (children.length === 0) {
-      const tmpl = getTemplate('Screen');
-      screen.width = tmpl.width;
-      screen.height = tmpl.height;
-    } else {
-      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-      for (const cid of children) {
-        const child = this.nodes.get(cid);
-        if (!child) continue;
-        minX = Math.min(minX, child.x);
-        minY = Math.min(minY, child.y);
-        maxX = Math.max(maxX, child.x + child.width);
-        maxY = Math.max(maxY, child.y + child.height);
-      }
-      if (minX === Infinity) {
-        const tmpl = getTemplate('Screen');
-        screen.width = tmpl.width;
-        screen.height = tmpl.height;
-        return;
-      }
-      const padding = 60;
-      const headerH = 36;
-      screen.x = minX - padding;
-      screen.y = minY - padding - headerH;
-      screen.width = (maxX - minX) + padding * 2;
-      screen.height = (maxY - minY) + padding * 2 + headerH;
+      return;
     }
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const cid of children) {
+      const child = this.nodes.get(cid);
+      if (!child) continue;
+      minX = Math.min(minX, child.x);
+      minY = Math.min(minY, child.y);
+      maxX = Math.max(maxX, child.x + child.width);
+      maxY = Math.max(maxY, child.y + child.height);
+    }
+    if (minX === Infinity) {
+      return;
+    }
+    const padding = 60;
+    const headerH = 36;
+    screen.x = minX - padding;
+    screen.y = minY - padding - headerH;
+    screen.width = (maxX - minX) + padding * 2;
+    screen.height = (maxY - minY) + padding * 2 + headerH;
     const group = this.nodesLayer.querySelector(`.node-group[data-id="${screen.id}"]`);
     if (group) {
       group.setAttribute('transform', `translate(${screen.x},${screen.y})`);
@@ -684,6 +679,15 @@ class Graph {
         inner.setAttribute('stroke-dasharray', '5,3');
         border.appendChild(inner);
       }
+
+      const resizeHandle = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      resizeHandle.setAttribute('class', 'node-resize-handle');
+      resizeHandle.setAttribute('data-node-id', node.id);
+      resizeHandle.setAttribute('points', `${w-14},${h} ${w},${h} ${w},${h-14}`);
+      resizeHandle.setAttribute('fill', '#ffffff');
+      resizeHandle.setAttribute('opacity', '0.6');
+      resizeHandle.setAttribute('cursor', 'nwse-resize');
+      body.appendChild(resizeHandle);
     } else {
       const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       rect.setAttribute('x', '0');
@@ -975,11 +979,6 @@ class Graph {
     for (const edge of this.edges.values()) {
       this._updateEdgePath(edge);
     }
-    for (const node of this.nodes.values()) {
-      if (node.type === 'Screen') {
-        this._updateContainerBounds(node);
-      }
-    }
   }
 
   /* ─── Events ─── */
@@ -1022,6 +1021,14 @@ class Graph {
   }
 
   _onMouseDown(e) {
+    const resizeHandle = e.target.closest('.node-resize-handle');
+    if (resizeHandle) {
+      const nodeId = resizeHandle.getAttribute('data-node-id');
+      this.selectNode(nodeId);
+      this._startResize(nodeId, e);
+      return;
+    }
+
     const pin = e.target.closest('.pin');
     if (pin) {
       const nodeId = pin.getAttribute('data-node');
@@ -1053,7 +1060,9 @@ class Graph {
   }
 
   _onMouseMove(e) {
-    if (this.dragState) {
+    if (this.resizeState) {
+      this._updateResize(e);
+    } else if (this.dragState) {
       this._updateDrag(e);
     } else if (this.panState) {
       this._updatePan(e);
@@ -1065,7 +1074,9 @@ class Graph {
   }
 
   _onMouseUp(e) {
-    if (this.dragState) {
+    if (this.resizeState) {
+      this._endResize();
+    } else if (this.dragState) {
       this._endDrag();
     } else if (this.panState) {
       this._endPan();
@@ -1144,6 +1155,64 @@ class Graph {
         this._updateContainerBounds(node);
       }
     }
+    this._emitChange();
+  }
+
+  /* ─── Resize ─── */
+
+  _startResize(nodeId, e) {
+    const node = this.nodes.get(nodeId);
+    if (!node) return;
+    this.resizeState = {
+      nodeId,
+      startX: e.clientX,
+      startY: e.clientY,
+      origW: node.width,
+      origH: node.height
+    };
+    this.svg.classList.add('resizing-node');
+    e.stopPropagation();
+  }
+
+  _updateResize(e) {
+    const state = this.resizeState;
+    const node = this.nodes.get(state.nodeId);
+    if (!node) return;
+    const dx = (e.clientX - state.startX) / this.viewScale;
+    const dy = (e.clientY - state.startY) / this.viewScale;
+    const newW = Math.max(80, state.origW + dx);
+    const newH = Math.max(40, state.origH + dy);
+    node.width = newW;
+    node.height = newH;
+    const group = this.nodesLayer.querySelector(`.node-group[data-id="${state.nodeId}"]`);
+    if (group) {
+      this._recreateNode(node);
+    }
+    for (const edge of this.edges.values()) {
+      if (edge.fromNode === state.nodeId || edge.toNode === state.nodeId) {
+        this._updateEdgePath(edge);
+      }
+    }
+    const wInput = document.getElementById('prop-width');
+    const hInput = document.getElementById('prop-height');
+    if (wInput && !wInput.disabled) wInput.value = Math.round(newW);
+    if (hInput && !hInput.disabled) hInput.value = Math.round(newH);
+  }
+
+  _endResize() {
+    if (!this.resizeState) return;
+    const node = this.nodes.get(this.resizeState.nodeId);
+    if (node) {
+      if (node.children && node.children.length > 0) {
+        this._updateContainerBounds(node);
+      }
+      const wInput = document.getElementById('prop-width');
+      const hInput = document.getElementById('prop-height');
+      if (wInput && !wInput.disabled) wInput.value = Math.round(node.width);
+      if (hInput && !hInput.disabled) hInput.value = Math.round(node.height);
+    }
+    this.resizeState = null;
+    this.svg.classList.remove('resizing-node');
     this._emitChange();
   }
 
@@ -1328,6 +1397,18 @@ class Graph {
     if (!node || !node.interfaces) return;
     node.interfaces.figma = figma;
     node.interfaces.html = html;
+    this._emitChange();
+  }
+
+  updateNodeSize(id, width, height) {
+    const node = this.nodes.get(id);
+    if (!node) return;
+    node.width = Math.max(80, width);
+    node.height = Math.max(40, height);
+    const group = this.nodesLayer.querySelector(`.node-group[data-id="${id}"]`);
+    if (group) {
+      this._recreateNode(node);
+    }
     this._emitChange();
   }
 

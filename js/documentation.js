@@ -25,8 +25,13 @@ class DocumentationPanel {
     this.propHtmlUrl = document.getElementById('prop-html-url');
     this.propInterfaceHint = document.getElementById('prop-interface-hint');
 
+    this.propDimSection = document.getElementById('prop-dim-section');
+    this.propWidth = document.getElementById('prop-width');
+    this.propHeight = document.getElementById('prop-height');
+
     this.propScreenChildren = document.getElementById('prop-screen-children');
     this.propChildrenList = document.getElementById('prop-children-list');
+    this.propChildAddBtn = document.getElementById('prop-child-add-btn');
 
     this.propImplSection = document.getElementById('prop-impl-section');
     this.propOrder = document.getElementById('prop-order');
@@ -88,6 +93,28 @@ class DocumentationPanel {
     this.propDiaryInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') this._addDiaryEntry();
     });
+
+    this.propWidth.addEventListener('input', () => {
+      if (this.currentType === 'node' && this.currentId && this.graph) {
+        const w = parseInt(this.propWidth.value, 10);
+        const h = parseInt(this.propHeight.value, 10);
+        if (w >= 80 && h >= 40) {
+          this.graph.updateNodeSize(this.currentId, w, h);
+        }
+      }
+    });
+
+    this.propHeight.addEventListener('input', () => {
+      if (this.currentType === 'node' && this.currentId && this.graph) {
+        const w = parseInt(this.propWidth.value, 10);
+        const h = parseInt(this.propHeight.value, 10);
+        if (w >= 80 && h >= 40) {
+          this.graph.updateNodeSize(this.currentId, w, h);
+        }
+      }
+    });
+
+    this.propChildAddBtn.addEventListener('click', () => this._addChildToScreen());
   }
 
   showNode(node) {
@@ -113,12 +140,18 @@ class DocumentationPanel {
       } else {
         this.propInterfaceSection.classList.add('hidden');
       }
+      if (this.propDimSection) {
+        this.propDimSection.classList.remove('hidden');
+        this.propWidth.value = node.width;
+        this.propHeight.value = node.height;
+      }
       if (this.propScreenChildren && this.graph) {
         this.propScreenChildren.classList.remove('hidden');
         this._renderChildrenList(node);
       }
     } else {
       this.propInterfaceSection.classList.add('hidden');
+      if (this.propDimSection) this.propDimSection.classList.add('hidden');
       if (this.propScreenChildren) this.propScreenChildren.classList.add('hidden');
     }
 
@@ -173,6 +206,7 @@ class DocumentationPanel {
     this.docSection.classList.add('hidden');
     this.docPlaceholder.classList.remove('hidden');
     this.propInterfaceSection.classList.add('hidden');
+    if (this.propDimSection) this.propDimSection.classList.add('hidden');
     this.propImplSection.classList.add('hidden');
   }
 
@@ -281,6 +315,33 @@ class DocumentationPanel {
       row.appendChild(name);
       row.appendChild(removeBtn);
       this.propChildrenList.appendChild(row);
+    }
+  }
+
+  _addChildToScreen() {
+    if (!this.graph || this.currentType !== 'node') return;
+    const screen = this.graph.getNode(this.currentId);
+    if (!screen || screen.type !== 'Screen') return;
+    const candidates = [];
+    for (const n of this.graph.nodes.values()) {
+      if (n.type !== 'Screen' && !n.parentScreen && n.id !== screen.id) {
+        candidates.push(n);
+      }
+    }
+    if (candidates.length === 0) {
+      const hint = this.propChildrenList.querySelector('.prop-interface-hint');
+      if (hint) hint.textContent = t('screen.noAvailableNodes');
+      return;
+    }
+    const names = candidates.map((n, i) => `${i+1}. ${getTemplateLabel(n.type)}: ${n.name}`).join('\n');
+    const choice = prompt(t('screen.addChildPrompt') + '\n\n' + names + '\n\n' + t('screen.addChildHint'));
+    if (choice !== null) {
+      const idx = parseInt(choice, 10) - 1;
+      if (idx >= 0 && idx < candidates.length) {
+        this.graph.addChildToScreen(screen.id, candidates[idx].id);
+        const updated = this.graph.getNode(screen.id);
+        if (updated) this._renderChildrenList(updated);
+      }
     }
   }
 
