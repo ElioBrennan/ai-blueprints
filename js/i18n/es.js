@@ -358,7 +358,9 @@ window._translations.es = {
   'guide.section.screens': 'Jerarqu\u00EDa de pantallas',
   'guide.screens.text':
     'Los nodos tipo Pantalla (Screen) pueden contener subnodos (procesos, decisiones, documentos). Arrastra un nodo encima de una pantalla para asignarlo como tarea hija, o usa el men\u00FA contextual "Vincular a Pantalla".\n\n' +
-    'Las tareas hijas se muestran dentro del contenedor de la pantalla y se mueven con ella.',
+    'Las tareas hijas se muestran dentro del contenedor de la pantalla y se mueven con ella.\n\n' +
+    'Tambi\u00E9n puedes a\u00F1adir tareas desde el panel de propiedades con el bot\u00F3n "+ A\u00F1adir tarea" en la secci\u00F3n "Tareas asociadas".\n\n' +
+    'Para redimensionar una pantalla, selecci\u00F3nala y arrastra el tri\u00E1ngulo blanco en la esquina inferior derecha, o ajusta los valores de Ancho y Alto en el panel de propiedades.',
   'guide.section.documentation': 'Documentar elementos',
   'guide.documentation.text':
     'Selecciona un nodo o conexi\u00F3n para ver su panel de propiedades a la derecha. All\u00ED puedes:\n' +
@@ -367,7 +369,7 @@ window._translations.es = {
     '- Usar el bot\u00F3n "Plantilla" para insertar documentaci\u00F3n predefinida\n' +
     '- Asignar orden de implementaci\u00F3n y estado (Pendiente/En progreso/Completado)\n' +
     '- A\u00F1adir entradas al diario de implementaci\u00F3n\n' +
-    '- Para pantallas: a\u00F1adir URLs de Figma y prototipo HTML',
+    '- Para pantallas: a\u00F1adir URLs de Figma, prototipo HTML, ajustar dimensiones, y gestionar tareas asociadas',
   'guide.section.saving': 'Guardar proyectos',
   'guide.saving.text':
     'Usa los botones "Guardar" o "Guardar como..." de la barra de herramientas.\n\n' +
