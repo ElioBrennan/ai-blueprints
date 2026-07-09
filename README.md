@@ -4,6 +4,8 @@ Editor visual de diagramas de flujo (blueprints) 100% client-side, sin dependenc
 
 Permite crear gráficos de nodos y conexiones, documentar cada elemento con Markdown, y exportar la documentación a ficheros `.md`, un sitio HTML estático o un contexto LLM.
 
+Buenas tardes tengan ustedes.
+
 ---
 
 ## Requisitos
